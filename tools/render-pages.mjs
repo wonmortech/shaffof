@@ -320,7 +320,7 @@ function page(lang) {
 <meta property="og:title" content="${t.title}">
 <meta property="og:description" content="${t.desc}">
 <meta property="og:url" content="${url}">
-<meta property="og:image" content="${ORIGIN}/og.png">
+<meta property="og:image" content="${ORIGIN}/og-${lang}.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="${t.ogAlt}">
