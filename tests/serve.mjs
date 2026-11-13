@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Tiny static server for the end-to-end tests: serves site/ the way deploy/Caddyfile does (same
 // security headers, directory index, /404.html with status 404). No dependencies.
 //   node tests/serve.mjs            -> http://127.0.0.1:4173

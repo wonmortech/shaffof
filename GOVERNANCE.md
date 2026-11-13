@@ -20,10 +20,24 @@ recorded in the plan. When maintainers disagree, the project lead (@wonmors) dec
 
 ## Continuity
 
-The organization has more than one owner, so the repository, the domain configuration and the deployment
-secrets remain accessible if one person is unavailable. Deployment is automated from `main`
-([.github/workflows/deploy.yml](.github/workflows/deploy.yml)), so no single machine is needed to publish.
-We are a small team today and say so openly: growing the number of active maintainers is a goal of the plan.
+To be clear about the current state: both maintainer accounts listed above belong to the founder, so today
+the project has one person behind it, not two independent people. Continuity therefore rests on:
+
+- the account recovery settings of the `wonmortech` organization and of those accounts, so access can be
+  restored if a device or a password is lost;
+- automated deployment from `main` ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) and
+  reproducible, signed releases ([SECURITY.md](SECURITY.md#verifying-a-release)), so no single machine is
+  needed to publish the site and anyone can rebuild it from the public repository under its open licence.
+
+Adding an independent second owner is an open goal; see [Open goals](#open-goals).
+
+## Open goals
+
+- **An independent second owner and maintainer.** Someone other than the founder, with owner rights in the
+  organization and the ability to merge, release and deploy. This is the missing piece for real continuity
+  and for reviews by a second person; until then, the review rule in [CONTRIBUTING.md](CONTRIBUTING.md)
+  applies only when another maintainer is available. Contributors who want to take on this role can say so
+  in an issue.
 
 ## Security
 

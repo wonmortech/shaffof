@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+# SPDX-License-Identifier: Apache-2.0
+
 name: CI
 
 on:
@@ -36,13 +39,23 @@ jobs:
       - name: Pages match the renderer
         run: node tools/render-pages.mjs && git diff --exit-code -- site/
 
-      # Dev-only dependency (@playwright/test, exact version, lockfile). Install scripts are not run.
+      # Dev-only dependencies (test and lint tools, exact versions, lockfile). Install scripts are not run.
       - name: Install test dependencies
         run: npm ci --ignore-scripts
+
+      # ESLint (flat config in eslint.config.mjs); any warning fails the build.
+      - name: Lint
+        run: npm run lint
+
+      # Every file carries SPDX copyright and licence information (headers or REUSE.toml).
+      - name: REUSE compliance
+        uses: fsfe/reuse-action@676e2d560c9a403aa252096d99fcab3e1132b0f5 # v6.0.0
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      # Unit tests with a coverage gate (lines 90%, branches 80%), then end-to-end tests in Chromium.
+      # Unit tests with a gate on the logic files (lines 90%, branches 80%), then the end-to-end tests in
+      # Chromium, then the combined unit + browser coverage of every script under site/ (statements and
+      # lines 90%, branches 80%; tools/coverage.mjs).
       - name: Test
         run: npm test

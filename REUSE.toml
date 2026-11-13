@@ -1,0 +1,57 @@
+# SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+# SPDX-License-Identifier: Apache-2.0
+
+# REUSE (https://reuse.software) metadata. Every source file that takes comments carries its own SPDX
+# header; the files below cannot (JSON, images, fonts, plain text, Markdown, generated lockfile) or are
+# third-party. `reuse lint` runs in CI (the required `build` job).
+version = 1
+SPDX-PackageName = "shaffof"
+SPDX-PackageSupplier = "Wonmor <https://github.com/wonmortech>"
+SPDX-PackageDownloadLocation = "https://github.com/wonmortech/shaffof"
+
+# Project files without comment syntax: documentation, data, images, plain-text site files.
+[[annotations]]
+path = [
+  "**/*.md",
+  "package.json",
+  "package-lock.json",
+  "site/*.png",
+  "site/robots.txt",
+  "site/sitemap.xml",
+  "site/.well-known/security.txt",
+  # Has its SPDX header, but the binary-file heuristic in reuse skips it (mostly Cyrillic UTF-8).
+  "site/ru/index.html",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Wonmor and Shaffof contributors"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Fonts (SIL Open Font License 1.1). Each family ships its licence text next to the files.
+# Wm Sans, Latin subsets: Hanken Grotesk.
+[[annotations]]
+path = ["site/fonts/sans-latin.woff2", "site/fonts/sans-latin-ext.woff2", "site/fonts/LICENSE-hanken-grotesk.txt"]
+precedence = "override"
+SPDX-FileCopyrightText = "2021 The Hanken Grotesk Project Authors (https://github.com/marcologous/hanken-grotesk)"
+SPDX-License-Identifier = "OFL-1.1"
+
+# Wm Sans, Cyrillic subsets: Onest.
+[[annotations]]
+path = ["site/fonts/sans-cyrillic.woff2", "site/fonts/sans-cyrillic-ext.woff2", "site/fonts/LICENSE-onest.txt"]
+precedence = "override"
+SPDX-FileCopyrightText = "2021 The Onest Project Authors (https://github.com/simpals/onest)"
+SPDX-License-Identifier = "OFL-1.1"
+
+# Wm Serif: Source Serif 4. The bundled licence text (from Google Fonts) names "Google Inc."; the upstream
+# project (https://github.com/adobe-fonts/source-serif) names Adobe, so both are listed.
+[[annotations]]
+path = ["site/fonts/serif-*.woff2", "site/fonts/LICENSE-source-serif-4.txt"]
+precedence = "override"
+SPDX-FileCopyrightText = ["2014-2023 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'", "Google Inc."]
+SPDX-License-Identifier = "OFL-1.1"
+
+# Wm Mono: JetBrains Mono.
+[[annotations]]
+path = ["site/fonts/mono-*.woff2", "site/fonts/LICENSE-jetbrains-mono.txt"]
+precedence = "override"
+SPDX-FileCopyrightText = "2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono)"
+SPDX-License-Identifier = "OFL-1.1"

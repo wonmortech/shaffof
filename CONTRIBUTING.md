@@ -22,16 +22,22 @@ Requirements: Node.js 24 and Git. There is no build step: `site/` is served as i
 npm ci                                  # test tools only; the site has no runtime dependencies
 npx playwright install chromium         # once, for the browser tests
 node tools/check-site.mjs               # links, CSP rules, forbidden text
-npm test                                # unit tests with a coverage gate, then browser tests
+npm run lint                            # ESLint, zero warnings allowed
+npm test                                # unit tests, browser tests, combined coverage gate
 ```
 
 ## Requirements for a change
 
 - **Tests.** New behaviour and every bug fix come with an automated test in `tests/`. CI runs `npm test` on
-  every pull request and fails if coverage of the tested logic drops below the gate (90 % lines, 80 % branches).
+  every pull request and fails if unit coverage of the logic files drops below 90 % lines and 80 % branches, or
+  if the combined unit and browser coverage of all JavaScript under `site/` drops below 90 % statements, 90 %
+  lines or 80 % branches (`tools/coverage.mjs`; the report is written to `.coverage/report/`).
 - **The CSP.** The site is served with `default-src 'self'`: no inline `<script>`, no inline event handlers and
   no third-party origins. `tools/check-site.mjs` enforces this.
-- **Coding standard.** Plain modern JavaScript (ES2022), no frameworks and no runtime dependencies; build the DOM
+- **Licence headers.** Every new source file starts with the two SPDX lines used in the existing files
+  (`SPDX-FileCopyrightText` and `SPDX-License-Identifier`); files that take no comments go in `REUSE.toml`.
+  CI runs `reuse lint`.
+- **Coding standard.** Enforced by ESLint (`eslint.config.mjs`, `npm run lint`, zero warnings). Plain modern JavaScript (ES2022), no frameworks and no runtime dependencies; build the DOM
   with `textContent` and DOM APIs, never `innerHTML` with data. Keep each language page (`/`, `/en/`, `/ru/`)
   in sync, and keep the page accessible (WCAG 2.2 AA: contrast, focus, keyboard, `prefers-reduced-motion`).
 - **Honesty.** Plans are labelled as plans. A claim or a number needs a source someone else can check.

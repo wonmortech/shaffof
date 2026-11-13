@@ -9,9 +9,23 @@ documents change, there is no released product yet.
 
 ### Added
 - Property-based tests with fast-check on random input, run in CI with the unit tests.
+- ESLint (flat config, `npm run lint`, zero warnings allowed), run in the required CI job.
+- Combined coverage of every script under `site/`: Chromium V8 coverage from the browser tests merged with the
+  unit-test coverage, gated at 90% statements and lines and 80% branches (today 98.3% statements, 92.1% branches).
+- Browser tests for the whole hero animation, pointer and resize, the theme switch under reduced motion, the
+  two-reports illustration, re-checking a proof when the receipt changes, and the page without WebCrypto.
+- REUSE compliance: SPDX headers in every source file, `REUSE.toml` for the rest, licence texts in `LICENSES/`,
+  and `reuse lint` in CI.
+- SECURITY.md: how to verify a release (checksum and Sigstore-signed build provenance).
+
+### Changed
+- GOVERNANCE.md states the real continuity situation: both maintainer accounts belong to the founder, and an
+  independent second owner is an open goal.
+- README.md: current status of releases, links to the security, governance and contributing documents.
 
 ### Fixed
 - Removed a no-op string replacement in the page generator (CodeQL js/identity-replacement).
+- Removed an unused variable in the hero animation (found by ESLint).
 
 ## [0.1.0] - 2026-11-14
 

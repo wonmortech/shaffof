@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // End-to-end tests: Chromium only, against site/ served by tests/serve.mjs under the production CSP.
 // Locally a pre-installed Chromium can be used with PW_CHROMIUM_PATH=/path/to/chrome;
 // CI runs `npx playwright install --with-deps chromium` instead.

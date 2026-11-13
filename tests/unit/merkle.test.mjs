@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Unit tests for site/assets/js/merkle.js. Expected values come from an independent reference
 // implementation built on node:crypto (not WebCrypto) and from published RFC 6962 / RFC 9162 vectors.
 import { test, describe } from 'node:test';

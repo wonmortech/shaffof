@@ -1,5 +1,8 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // End-to-end tests for the Shaffof home page in a real Chromium, under the production CSP.
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.mjs';
 
 const PAGES = [
   { path: '/', lang: 'uz', ok: 'Bor.', bad: 'Isbot mos kelmadi' },
@@ -219,4 +222,104 @@ test('unknown paths get the 404 page with links home', async ({ page }) => {
   await page.getByRole('link', { name: 'Home' }).click();
   await expect(page).toHaveURL(/\/en\/$/);
   await demoReady(page);
+});
+
+test('demo: changing the receipt after a check re-runs the proof for the new entry', async ({ page }) => {
+  const seen = watch(page);
+  await page.goto('/en/');
+  await demoReady(page);
+  await page.locator('#receipt').selectOption({ label: 'K-0001' });
+  await page.locator('#check').click();
+  await expect(page.locator('#ledger-rows tr.proving')).toHaveCount(1);
+  await expect(page.locator('#ledger-rows tr').nth(0)).toHaveClass(/proving/);
+  // No second click: the open proof follows the selection.
+  await page.locator('#receipt').selectOption({ label: 'K-0003' });
+  await expect(page.locator('#ledger-rows tr').nth(3)).toHaveClass(/proving/);
+  await expect(page.locator('#ledger-rows tr.proving')).toHaveCount(1);
+  await expect(page.locator('#proof-result .chip')).toHaveClass(/chip-good/);
+  expectClean(seen);
+});
+
+test('two reports: the silent edit plays in turn while the illustration is on screen', async ({ page }) => {
+  const seen = watch(page);
+  await page.clock.install();
+  await page.goto('/en/');
+  const plain = page.locator('#plain-state'), chip = page.locator('#sh-state');
+  await expect(page.locator('#sh-pub')).toHaveText(/^[0-9a-f]{16}…$/);
+  await expect(plain).toHaveText('A plain PDF or spreadsheet');
+  await page.locator('#compare').scrollIntoViewIfNeeded();
+  await page.clock.runFor(3700);
+  await expect(plain).toHaveText('A number changed. No trace left.');
+  await expect(chip).toHaveClass(/chip-bad/);
+  await expect(page.locator('#compare .report-row.edited')).toHaveCount(2);
+  await page.clock.runFor(3600);
+  await expect(plain).toHaveText('A plain PDF or spreadsheet');
+  await expect(chip).toHaveClass(/chip-good/);
+  expectClean(seen);
+});
+
+test('hero canvas: every phase of the animation draws, through the seal and the proof paths', async ({ page }) => {
+  const seen = watch(page);
+  await page.clock.install();
+  await page.goto('/en/');
+  await page.clock.runFor(1000); // past the font wait
+  const sigs = new Set();
+  // About 16 s of animation in steps: leaves, edges, seal and its ripple, then the proof traveller.
+  for (let i = 0; i < 8; i++) {
+    await page.clock.runFor(2000);
+    const s = await canvasStats(page);
+    expect(s.inked).toBeGreaterThan(0.02);
+    sigs.add(s.sig);
+  }
+  expect(sigs.size).toBeGreaterThan(6);
+  expectClean(seen);
+});
+
+test('hero canvas follows the pointer and the viewport size', async ({ page }) => {
+  const seen = watch(page);
+  await page.goto('/en/');
+  await expect.poll(async () => (await canvasStats(page)).inked, { timeout: 10_000 }).toBeGreaterThan(0.02);
+  // Pointer in the water: glow and ripples are drawn without errors.
+  const box = await page.locator('#stage').boundingBox();
+  for (let i = 0; i < 6; i++) {
+    await page.mouse.move(box.x + box.width * (0.3 + i * 0.08), box.y + box.height * 0.75);
+    await page.waitForTimeout(250);
+  }
+  await page.mouse.move(0, 0);
+  // A new viewport resizes the backing store.
+  const before = (await canvasStats(page)).w;
+  await page.setViewportSize({ width: 700, height: 900 });
+  await expect.poll(async () => (await canvasStats(page)).w).not.toBe(before);
+  expectClean(seen);
+});
+
+test.describe('reduced motion, theme switch', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('the still frame is redrawn in the new theme colours, and the two reports show the edit at once', async ({ page }) => {
+    const seen = watch(page);
+    await page.goto('/en/');
+    await expect(page.locator('#plain-state')).toHaveText('A number changed. No trace left.');
+    await expect(page.locator('#sh-state')).toHaveClass(/chip-bad/);
+    await expect.poll(async () => (await canvasStats(page)).inked, { timeout: 10_000 }).toBeGreaterThan(0.02);
+    // The still frame waits for the tree hashes; poll until it settles.
+    let a = await canvasStats(page);
+    await expect.poll(async () => { const b = await canvasStats(page); const same = b.sig === a.sig; a = b; return same; }).toBe(true);
+    await page.locator('#theme').click();
+    await expect.poll(async () => (await canvasStats(page)).sig).not.toBe(a.sig);
+    expectClean(seen);
+  });
+});
+
+test('without WebCrypto the demo explains why it cannot run, and the page still works', async ({ page }) => {
+  const seen = watch(page);
+  await page.addInitScript(() => Object.defineProperty(window.crypto, 'subtle', { value: undefined }));
+  await page.goto('/en/');
+  const note = page.locator('[data-nocrypto]').first();
+  await expect(note).toBeVisible();
+  await expect(note).toHaveText('This browser lacks WebCrypto, so the demo cannot run.');
+  await expect(page.locator('#root-now')).not.toHaveText(HEX64);
+  await expect.poll(async () => (await canvasStats(page)).inked, { timeout: 10_000 }).toBeGreaterThan(0.02);
+  await page.locator('#theme').click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', /^(light|dark)$/);
+  expectClean(seen);
 });

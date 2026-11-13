@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Renders site/index.html, site/en/index.html and site/ru/index.html from one template and one
 // string table, so the three languages never drift. The output is plain static HTML (no build step
 // is needed to serve the site); run `node tools/render-pages.mjs` after editing strings.
@@ -301,6 +304,8 @@ function page(lang) {
   const roadHalf = (items) => `<ol class="road">${items.map(([k, h, p]) => `<li class="${k === 'now' ? 'now' : ''}"><div class="rd"><h3>${h}</h3><span class="chip ${chipKind[k]}">${t.road[k]}</span></div><p>${p}</p></li>`).join('')}</ol>`;
 
   return `<!doctype html>
+<!-- SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 <html lang="${lang}" dir="ltr">
 <head>
 <meta charset="utf-8">

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Shaffof hero: a glass vessel of clear water. Eight ledger entries rest in it, pairs join upward
    into a Merkle tree, the root rises above the surface and is sealed with a girih star, then one
    entry's inclusion path lights up at a time. Canvas 2D, no dependencies.
@@ -100,7 +103,6 @@
 
   function frame(t) {
     var g = G; ctx.clearRect(0, 0, W, H);
-    var L = col.dark ? 1 : 0.85;
 
     // vessel body
     rr(g.x0, g.y0, g.vw, g.vh, g.rad);

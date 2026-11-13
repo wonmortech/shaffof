@@ -33,3 +33,21 @@ covered by its safe-harbour section. There is no paid bug bounty.
 
 A machine-readable contact file is published at [https://shaffof.wonmor.io/.well-known/security.txt](https://shaffof.wonmor.io/.well-known/security.txt).
 The security design of the project is described in [docs/ASSURANCE.md](docs/ASSURANCE.md).
+
+## Verifying a release
+
+Each release on GitHub is a reproducible archive of `site/` with a checksum file and build provenance. The
+provenance is signed with [Sigstore](https://www.sigstore.dev/) through GitHub artifact attestations by
+[.github/workflows/release.yml](.github/workflows/release.yml), which builds the archive twice and publishes
+it only if both builds are byte-identical. To check a download (here `v0.1.0`) with the
+[GitHub CLI](https://cli.github.com/):
+
+```sh
+gh release download v0.1.0 -R wonmortech/shaffof
+sha256sum -c SHA256SUMS
+gh attestation verify shaffof-site-0.1.0.tar.gz -R wonmortech/shaffof
+```
+
+`sha256sum -c` must print `OK` for the archive, and `gh attestation verify` must report that the attestation
+was verified and that the archive was built by `release.yml` in `wonmortech/shaffof`. A failure of either
+means the file is not the one we published: do not use it, and report it as described above.
