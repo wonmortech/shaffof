@@ -162,14 +162,33 @@ misuse and Merkle tree weaknesses; then a test for every finding.
 
 ## 7. How the tests back these claims
 
-`npm test` runs both suites; CI (`.github/workflows/ci.yml`, required check `build`) runs them on every pull request
-after `node tools/check-site.mjs` and a check that the generated pages match `tools/render-pages.mjs`.
+`npm test` runs both suites and then a combined coverage gate; CI (`.github/workflows/ci.yml`, required check `build`)
+runs them on every pull request after `node tools/check-site.mjs`, a check that the generated pages match
+`tools/render-pages.mjs`, ESLint with zero warnings allowed (`npm run lint`) and `reuse lint`.
 
 **Unit tests** (`tests/unit/*.test.mjs`, Node's built-in `node:test`) load `merkle.js` and `demo-core.js`, the same
 files the browser runs. Expected values come from an independent reference implementation written from the RFC 9162
 text on top of `node:crypto`, and from the published RFC 6962 vectors (roots for sizes 1 to 8 and an audit path). A
 coverage gate fails the run below 90% of lines, 80% of branches or 90% of functions of those two files; at the time
 of writing coverage is 100% of lines, 98.33% of branches and 100% of functions.
+
+**Combined coverage of every script under `site/`** (`tools/coverage.mjs`): the unit tests run again with Node's V8
+coverage, the end-to-end tests record Chromium's V8 coverage of each page (`tests/e2e/fixtures.mjs`), and
+monocart-coverage-reports merges both per file. A file no test loads counts as 0%. The gate fails below 90% of
+statements, 90% of lines or 80% of branches in total; no code is excluded from measurement. At the time of writing:
+
+| File | Statements | Branches | Lines |
+|---|---|---|---|
+| `demo-core.js` | 100% | 96.77% | 98.72% |
+| `main.js` | 98.24% | 90.00% | 97.25% |
+| `merkle.js` | 100% | 98.08% | 99.10% |
+| `stage.js` | 97.88% | 90.96% | 95.36% |
+| `theme.js` | 88.89% | 87.50% | 71.43% |
+| **Total** | **98.29%** | **92.14%** | **96.62%** |
+
+What stays uncovered is defensive early returns and environment fallbacks the tested Chromium never takes
+(a missing element or string table, no `IntersectionObserver`, blocked `localStorage`, a canvas without a 2D
+context, a coarse pointer) and a few timing branches such as a tab that is hidden while the animation runs.
 
 **End-to-end tests** (`tests/e2e/`, `@playwright/test` in Chromium) serve `site/` with `tests/serve.mjs`, which reads
 its response headers from `deploy/Caddyfile`, so the pages run under the production CSP.
@@ -183,4 +202,7 @@ its response headers from `deploy/Caddyfile`, so the pages run under the product
 | Stored theme values are allowlisted | `stored theme values other than light/dark are ignored` |
 | The hero renders, animates, and honours reduced motion | `hero canvas renders and animates`, `reduced motion › hero canvas shows one finished still frame` |
 | Unknown paths get the 404 page with status 404 and the CSP | `unknown paths get the 404 page with links home` |
+| Without WebCrypto the demo says it cannot run, and the rest of the page still works | `without WebCrypto the demo explains why it cannot run, ...` |
+| Every animation phase draws without errors; the hero follows pointer, size and theme | `hero canvas: every phase of the animation draws, ...`, `hero canvas follows the pointer and the viewport size`, `reduced motion, theme switch › ...` |
+| The two-reports illustration shows the silent edit, in turn or at once under reduced motion | `two reports: the silent edit plays in turn ...`, `reduced motion, theme switch › ...` |
 | Domain separation, no duplicated leaf, tamper detection, strict proof checks | `tests/unit/merkle.test.mjs` |

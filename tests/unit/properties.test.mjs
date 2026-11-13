@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Property-based tests (fast-check): Merkle proofs and amount parsing on random ledgers.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

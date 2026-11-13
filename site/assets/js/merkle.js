@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Shaffof demo Merkle core.
    Hashing follows RFC 9162 section 2.1: leaf = SHA-256(0x00 || entry), node = SHA-256(0x01 || left || right),
    the empty tree is SHA-256 of nothing, and a tree of n leaves splits at the largest power of two smaller

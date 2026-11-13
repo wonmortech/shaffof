@@ -9,8 +9,9 @@
 **A verifiable ledger for charity funds, and a sourced zakat calculator.**
 *Shaffof* means "transparent" in Uzbek.
 
-> **Status: planning. Nothing is released yet.** The home page has a working in-browser demo of
-> the verification idea, but there is no product, no hosted service and no partner fund.
+> **Status: planning. No product is released yet.** The home page has a working in-browser demo of
+> the verification idea, but there is no product, no hosted service and no partner fund. The GitHub
+> releases (from `v0.1.0`) are signed, reproducible archives of the home page only.
 
 Site: https://shaffof.wonmor.io
 
@@ -41,6 +42,9 @@ Site: https://shaffof.wonmor.io
 - [docs/PLAN.md](docs/PLAN.md): goals, architecture, milestones, risks, open questions (Uzbek)
 - [docs/research/](docs/research/): competitors, references, inspiration, legal and sharia notes (Uzbek)
 - [DESIGN.md](DESIGN.md): the visual direction of the home page
+- [docs/ASSURANCE.md](docs/ASSURANCE.md): the security assurance case for the site and the demo
+- [SECURITY.md](SECURITY.md): how to report a vulnerability, and [how to verify a release](SECURITY.md#verifying-a-release)
+- [GOVERNANCE.md](GOVERNANCE.md), [CONTRIBUTING.md](CONTRIBUTING.md), [CHANGELOG.md](CHANGELOG.md)
 
 ## Repository layout
 
@@ -48,7 +52,10 @@ Site: https://shaffof.wonmor.io
 |---|---|
 | `site/` | The static home page (uz default, `en/`, `ru/`). No build step; serve the folder as is. |
 | `tools/render-pages.mjs` | Regenerates the three `index.html` files from one string table: `node tools/render-pages.mjs` |
-| `docs/` | Plan and research |
+| `tools/check-site.mjs`, `tools/coverage.mjs` | Site checks (links, CSP rules, forbidden text) and the combined coverage gate |
+| `tests/` | Unit and property tests (Node) and end-to-end tests (Playwright, Chromium, production CSP) |
+| `deploy/` | Caddy configuration and the deploy scripts used by `.github/workflows/deploy.yml` |
+| `docs/` | Plan, research and the assurance case |
 
 The site is designed for a strict CSP (`script-src 'self'`, no external hosts): fonts are
 self-hosted and every script is a local file.
@@ -62,11 +69,15 @@ certificates).
 ## Contributing
 
 Questions, criticism and ideas are welcome in [GitHub issues](https://github.com/wonmortech/shaffof/issues).
+How to set up, test (`npm test`, `npm run lint`) and send a change: [CONTRIBUTING.md](CONTRIBUTING.md).
+Security problems go privately through GitHub or Telegram, not issues: see [SECURITY.md](SECURITY.md).
 
 ## Licence
 
-[Apache-2.0](LICENSE). Fonts in `site/fonts/` are under the SIL Open Font License (see the
-`LICENSE-*.txt` files next to them).
+[Apache-2.0](LICENSE). Fonts in `site/fonts/` are under the SIL Open Font License 1.1 (see the
+`LICENSE-*.txt` files next to them). Every file carries SPDX copyright and licence information, in its header
+or in [REUSE.toml](REUSE.toml); the licence texts are in [LICENSES/](LICENSES/), and CI checks this with
+`reuse lint` ([REUSE](https://reuse.software)).
 
 ---
 

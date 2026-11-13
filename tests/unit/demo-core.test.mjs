@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // Unit tests for site/assets/js/demo-core.js: strings, number formatting, amount parsing, tree layout.
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';

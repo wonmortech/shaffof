@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Shaffof home page: theme switch, reveals, the "two reports" illustration and the live Merkle demo. */
 (function () {
   'use strict';

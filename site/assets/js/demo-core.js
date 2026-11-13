@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wonmor and Shaffof contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Shaffof demo: the pure logic behind main.js (strings, number formatting, amount parsing, tree layout,
    proof wording). No DOM access here, so the Node tests can load it.
    Works as a classic script (sets globalThis.ShaffofDemo) and as a CommonJS module. */

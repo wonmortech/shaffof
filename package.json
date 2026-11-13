@@ -2,19 +2,25 @@
   "name": "shaffof-site",
   "version": "0.0.0",
   "private": true,
-  "description": "Tests for the Shaffof static site (no build step, no runtime dependencies).",
+  "description": "Tests and linting for the Shaffof static site (no build step, no runtime dependencies).",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "npm run test:unit && npm run test:coverage",
     "test:unit": "node --test --experimental-test-coverage --test-coverage-include=site/assets/js/merkle.js --test-coverage-include=site/assets/js/demo-core.js --test-coverage-lines=90 --test-coverage-branches=80 --test-coverage-functions=90 \"tests/unit/*.test.mjs\"",
     "test:e2e": "playwright test",
+    "test:coverage": "node tools/coverage.mjs",
+    "lint": "eslint . --max-warnings 0",
     "serve": "node tests/serve.mjs"
   },
   "devDependencies": {
+    "@eslint/js": "9.39.5",
     "@playwright/test": "1.64.1",
-    "fast-check": "4.10.2"
+    "eslint": "9.39.5",
+    "fast-check": "4.10.2",
+    "globals": "17.13.0",
+    "monocart-coverage-reports": "3.2.0"
   }
 }
