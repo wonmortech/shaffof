@@ -331,6 +331,7 @@ function page(lang) {
 <script src="${b}assets/js/theme.js"></script>
 <script src="${b}assets/js/merkle.js" defer></script>
 <script src="${b}assets/js/stage.js" defer></script>
+<script src="${b}assets/js/demo-core.js" defer></script>
 <script src="${b}assets/js/main.js" defer></script>
 </head>
 <body>

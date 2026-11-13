@@ -16,7 +16,7 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -25,8 +25,24 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24
+          cache: npm
 
       # No build step: site/ is served as it is. The checker fails on broken local links, inline scripts,
       # third-party origins (the CSP would block them) and anything that must never be published.
       - name: Check site
         run: node tools/check-site.mjs
+
+      # The three index.html files are generated; fail if they drift from tools/render-pages.mjs.
+      - name: Pages match the renderer
+        run: node tools/render-pages.mjs && git diff --exit-code -- site/
+
+      # Dev-only dependency (@playwright/test, exact version, lockfile). Install scripts are not run.
+      - name: Install test dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      # Unit tests with a coverage gate (lines 90%, branches 80%), then end-to-end tests in Chromium.
+      - name: Test
+        run: npm test
