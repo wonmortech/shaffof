@@ -1,5 +1,11 @@
 # Shaffof
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16670/badge)](https://www.bestpractices.dev/projects/16670)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/wonmortech/shaffof/badge)](https://scorecard.dev/viewer/?uri=github.com/wonmortech/shaffof)
+[![CI](https://github.com/wonmortech/shaffof/actions/workflows/ci.yml/badge.svg)](https://github.com/wonmortech/shaffof/actions/workflows/ci.yml)
+[![Mozilla Observatory A+](https://img.shields.io/badge/Mozilla_Observatory-A%2B-brightgreen)](https://developer.mozilla.org/en-US/observatory/analyze?host=shaffof.wonmor.io)
+[![SSL Labs A+](https://img.shields.io/badge/SSL_Labs-A%2B-brightgreen)](https://www.ssllabs.com/ssltest/analyze.html?d=shaffof.wonmor.io)
+
 **A verifiable ledger for charity funds, and a sourced zakat calculator.**
 *Shaffof* means "transparent" in Uzbek.
 
