@@ -416,7 +416,7 @@ ${LEDGER.map(([id, date, cat, dir, amt]) => `<tr><td class="id">${id}</td><td cl
 </div>
 </div>
 </div>
-<p class="demo-note">${t.demo.note}</p>`.replace('id="demo-app"', 'id="demo-app"'))}
+<p class="demo-note">${t.demo.note}</p>`)}
 
 ${sec('zakat', `${head({ ...t.zk, id: 'zakat', extra: `<div class="row"><span class="chip">${t.zk.chip}</span></div>` })}
 <div class="card zakat rv" role="group" aria-label="${t.zk.mock}">
