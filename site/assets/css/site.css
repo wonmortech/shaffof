@@ -358,6 +358,8 @@ em { font-style: normal; color: rgb(var(--accent)); }
 .foot a { color: rgb(var(--ink-2)); display: inline-block; padding: 6px 0; }
 .foot a:hover { color: rgb(var(--ink)); }
 .foot .disc { color: rgb(var(--ink-2)); max-width: 34em; }
+.foot .disc--by { margin-top: 14px; }
+.foot .disc--note { margin-top: 10px; }
 
 /* 404 */
 .nf { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 40px 16px; }

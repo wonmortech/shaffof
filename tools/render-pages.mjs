@@ -447,7 +447,7 @@ ${sec('status', `<div class="card status-card rv"><span class="tag">${t.st.tag}<
 </main>
 <footer class="foot">
 <div class="wrap">
-<div><a class="brand" href="${b}${t.path || './'}" aria-label="${t.home}">${I.mark}<span>Shaffof</span></a><p class="disc" style="margin-top:14px">${t.ft.by}</p><p class="disc" style="margin-top:10px">${t.ft.disc}</p></div>
+<div><a class="brand" href="${b}${t.path || './'}" aria-label="${t.home}">${I.mark}<span>Shaffof</span></a><p class="disc disc--by">${t.ft.by}</p><p class="disc disc--note">${t.ft.disc}</p></div>
 <div><h2>${t.ft.fam}</h2><ul><li><a href="${LINKS.wonmor}">${t.ft.wonmor}</a></li><li><a href="${LINKS.muhr}">${t.ft.muhr}</a></li><li><a href="${LINKS.sanad}">${t.ft.sanad}</a></li></ul></div>
 <div><h2>${t.ft.links}</h2><ul><li><a href="${LINKS.repo}">${t.ft.gh}</a></li><li><a href="${LINKS.docs}">${t.ft.docs}</a></li><li><a href="${LINKS.research}">${t.st.links[1]}</a></li><li><a href="${LINKS.issues}">${t.ft.issues}</a></li></ul></div>
 </div>

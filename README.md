@@ -57,8 +57,9 @@ Site: https://shaffof.wonmor.io
 | `deploy/` | Caddy configuration and the deploy scripts used by `.github/workflows/deploy.yml` |
 | `docs/` | Plan, research and the assurance case |
 
-The site is designed for a strict CSP (`script-src 'self'`, no external hosts): fonts are
-self-hosted and every script is a local file.
+The site is designed for a strict CSP (`script-src 'self'`, `style-src 'self'`, no external hosts): fonts are
+self-hosted, every script and stylesheet is a local file, and the only inline style, inside the favicon, is
+allowed by its hash.
 
 ## Family
 
