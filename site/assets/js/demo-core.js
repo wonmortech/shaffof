@@ -52,7 +52,7 @@
 
   /* What the amount field keeps of what was typed: digits only, at most 12 (always a safe integer). */
   function parseAmount(raw) {
-    var text = '';
+    var text;
     /* A value with no text form (for example an array holding an object without toString) counts as empty. */
     try { text = String(raw == null ? '' : raw); } catch (e) { text = ''; }
     var digits = text.replace(/[^0-9]/g, '').slice(0, MAX_DIGITS);
