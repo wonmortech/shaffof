@@ -17,17 +17,22 @@ documents change, there is no released product yet.
 - REUSE compliance: SPDX headers in every source file, `REUSE.toml` for the rest, licence texts in `LICENSES/`,
   and `reuse lint` in CI.
 - SECURITY.md: how to verify a release (checksum and Sigstore-signed build provenance).
+- The 404 page links to the bug report form, so a broken link can be reported (#15).
+- `.editorconfig` with the repository style: UTF-8, LF, final newline, 2-space indent (#13).
+- CONTRIBUTING.md: `npm run serve` to preview the site locally (#14) and `reuse lint` in the pre-PR commands (#16).
 
 ### Changed
 - GOVERNANCE.md names two independent owners and maintainers, @wonmors (founder) and @xnosir (technical
   maintainer), and states openly that the founder's account runs delegated automation during setup.
 - README.md: current status of releases, links to the security, governance and contributing documents.
+- Development dependencies updated: ESLint 10, Playwright 1.65 (npm group).
 
 ### Fixed
 - The amount field no longer throws on a value that has no text form; it treats it as empty.
 - Removed a no-op string replacement in the page generator (CodeQL js/identity-replacement).
 - Removed an unused variable in the hero animation (found by ESLint).
 
+- Two initial assignments that were always overwritten, in the theme and demo scripts (ESLint 10 `no-useless-assignment`).
 ## [0.1.0] - 2026-11-14
 
 ### Added
