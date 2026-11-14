@@ -31,8 +31,8 @@ documents change, there is no released product yet.
 - The amount field no longer throws on a value that has no text form; it treats it as empty.
 - Removed a no-op string replacement in the page generator (CodeQL js/identity-replacement).
 - Removed an unused variable in the hero animation (found by ESLint).
-
 - Two initial assignments that were always overwritten, in the theme and demo scripts (ESLint 10 `no-useless-assignment`).
+
 ## [0.1.0] - 2026-11-14
 
 ### Added
