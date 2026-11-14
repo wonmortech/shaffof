@@ -53,3 +53,7 @@ test('parseAmount keeps only digits, at most 12, and always a safe integer', () 
     assert.ok(Number.isSafeInteger(p.value) && p.value >= 0);
   }), { numRuns: 300 });
 });
+
+test('parseAmount treats a value with no text form as empty', () => {
+  assert.deepEqual(D.parseAmount([[[{ toString: false }]]]), { digits: '', value: 0 });
+});

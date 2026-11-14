@@ -20,6 +20,7 @@ Requirements: Node.js 24 and Git. There is no build step: `site/` is served as i
 
 ```sh
 npm ci                                  # test tools only; the site has no runtime dependencies
+npm run serve                           # the site at the address it prints; Ctrl+C to stop
 npx playwright install chromium         # once, for the browser tests
 node tools/check-site.mjs               # links, CSP rules, forbidden text
 npm run lint                            # ESLint, zero warnings allowed
@@ -58,7 +59,7 @@ unsigned commit; fix it with `git rebase --signoff origin/main` and push again.
 ## Review and merge
 
 Every change goes through a pull request. It needs green CI (`build`, `dco`) and at least one approving review
-from a maintainer other than the author whenever another maintainer is available ([GOVERNANCE.md](GOVERNANCE.md)).
+from a maintainer other than the author ([GOVERNANCE.md](GOVERNANCE.md)); the branch rules of `main` enforce both.
 We squash-merge and delete the branch.
 
 ## Licence and conduct
