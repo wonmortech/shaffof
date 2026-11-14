@@ -19,11 +19,12 @@ documents change, there is no released product yet.
 - SECURITY.md: how to verify a release (checksum and Sigstore-signed build provenance).
 
 ### Changed
-- GOVERNANCE.md states the real continuity situation: both maintainer accounts belong to the founder, and an
-  independent second owner is an open goal.
+- GOVERNANCE.md names two independent owners and maintainers, @wonmors (founder) and @xnosir (technical
+  maintainer), and states openly that the founder's account runs delegated automation during setup.
 - README.md: current status of releases, links to the security, governance and contributing documents.
 
 ### Fixed
+- The amount field no longer throws on a value that has no text form; it treats it as empty.
 - Removed a no-op string replacement in the page generator (CodeQL js/identity-replacement).
 - Removed an unused variable in the hero animation (found by ESLint).
 
