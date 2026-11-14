@@ -24,6 +24,7 @@ documents change, there is no released product yet.
 - README.md: current status of releases, links to the security, governance and contributing documents.
 
 ### Fixed
+- The amount field no longer throws on a value that has no text form; it treats it as empty.
 - Removed a no-op string replacement in the page generator (CodeQL js/identity-replacement).
 - Removed an unused variable in the hero animation (found by ESLint).
 
