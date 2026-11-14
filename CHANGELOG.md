@@ -23,6 +23,10 @@ documents change, there is no released product yet.
   maintainer), and states openly that the founder's account runs delegated automation during setup.
 - README.md: current status of releases, links to the security, governance and contributing documents.
 
+### Security
+- The CSP no longer allows `style-src 'unsafe-inline'`. The two footer styles moved into the stylesheet, the
+  favicon's `<style>` is allowed by its sha256 hash, and `tools/check-site.mjs` fails on any new inline style.
+
 ### Fixed
 - The amount field no longer throws on a value that has no text form; it treats it as empty.
 - Removed a no-op string replacement in the page generator (CodeQL js/identity-replacement).

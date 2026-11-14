@@ -34,8 +34,9 @@ pipx run reuse lint                     # SPDX header or REUSE.toml entry for ev
   every pull request and fails if unit coverage of the logic files drops below 90 % lines and 80 % branches, or
   if the combined unit and browser coverage of all JavaScript under `site/` drops below 90 % statements, 90 %
   lines or 80 % branches (`tools/coverage.mjs`; the report is written to `.coverage/report/`).
-- **The CSP.** The site is served with `default-src 'self'`: no inline `<script>`, no inline event handlers and
-  no third-party origins. `tools/check-site.mjs` enforces this.
+- **The CSP.** The site is served with `default-src 'self'`: no inline `<script>`, no inline event handlers, no
+  `style` attributes or `<style>` elements (put styles in `site/assets/css/site.css`) and no third-party origins.
+  `tools/check-site.mjs` enforces this.
 - **Licence headers.** Every new source file starts with the two SPDX lines used in the existing files
   (`SPDX-FileCopyrightText` and `SPDX-License-Identifier`); files that take no comments go in `REUSE.toml`.
   CI runs `reuse lint`.

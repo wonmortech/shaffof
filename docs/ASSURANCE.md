@@ -79,7 +79,7 @@ flowchart LR
 | Principle (Saltzer and Schroeder, and successors) | How it is applied |
 |---|---|
 | Economy of mechanism | Static files, no build step, no framework, no runtime dependencies. About 800 lines of first-party JavaScript. |
-| Fail-safe defaults | The CSP allows only same-origin resources. `verify()` rejects malformed proofs instead of checking part of them. Without WebCrypto the demo does not run and says so. |
+| Fail-safe defaults | The CSP allows only same-origin resources, and no inline style except the favicon's `<style>`, pinned by its sha256 hash (`tools/check-site.mjs` fails on a `style` attribute, a `<style>` in a page, or an SVG `<style>` whose hash is not in the CSP). `verify()` rejects malformed proofs instead of checking part of them. Without WebCrypto the demo does not run and says so. |
 | Complete mediation | Every amount typed is reduced to at most 12 ASCII digits before it reaches the tree; every stored theme value is checked against `light`/`dark`. |
 | Open design | All code, the hashing rules (RFC 9162) and this document are public; security does not depend on secrecy. |
 | Separation of privilege | The CI deploy key cannot open a shell; only a server administrator can change the container or `bin/receive`. |
@@ -150,8 +150,6 @@ misuse and Merkle tree weaknesses; then a test for every finding.
 - **The demo verifier uses left/right flags,** not the RFC 9162 leaf index and tree size. It answers "is this entry
   under this root", but it does not prove the entry's position or the tree size. A production verifier should use
   the index-based algorithm of RFC 9162 section 2.1.3.2 and bind the tree size to the published root.
-- **`style-src 'unsafe-inline'`** is allowed because the generated footer uses two inline `style` attributes. With
-  no HTML injection sinks this has no known exploit path; removing those attributes would allow a stricter policy.
 - **HSTS** is set at the edge without `includeSubDomains` or preload; that is decided for the whole domain, outside
   this repository.
 - **Whoever can push to `main` can publish.** The forced-command key limits what a stolen deploy key can do (publish
