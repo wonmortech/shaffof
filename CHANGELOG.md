@@ -8,6 +8,9 @@ documents change, there is no released product yet.
 ## [Unreleased]
 
 ### Added
+- Concept demo (`demo/`, live at https://wonmor.io/demo/shaffof/): public reports, receipt proofs, auditor mode,
+  fund console and the concept zakat calculator on 16 fictional funds; smoke tests (`npm run test:demo`, in CI)
+  and generated README screenshots (`npm run site:screenshots`). The home page in `site/` is unchanged.
 - Property-based tests with fast-check on random input, run in CI with the unit tests.
 - ESLint (flat config, `npm run lint`, zero warnings allowed), run in the required CI job.
 - Combined coverage of every script under `site/`: Chromium V8 coverage from the browser tests merged with the
