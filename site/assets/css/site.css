@@ -385,3 +385,10 @@ em { font-style: normal; color: rgb(var(--accent)); }
   .tree { min-width: 600px; }
 }
 .demo > * { min-width: 0; }
+
+.mt-14 {
+  margin-top: 14px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
