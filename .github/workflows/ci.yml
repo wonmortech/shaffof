@@ -59,3 +59,7 @@ jobs:
       # lines 90%, branches 80%; tools/coverage.mjs).
       - name: Test
         run: npm test
+
+      # The concept demo (demo/): every screen renders under the production CSP with no console errors.
+      - name: Demo smoke test
+        run: npm run test:demo

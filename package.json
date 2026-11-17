@@ -2,7 +2,7 @@
   "name": "shaffof-site",
   "version": "0.0.0",
   "private": true,
-  "description": "Tests and linting for the Shaffof static site (no build step, no runtime dependencies).",
+  "description": "Tests and linting for the Shaffof static site and its concept demo (no runtime dependencies).",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=24"
@@ -13,7 +13,11 @@
     "test:e2e": "playwright test",
     "test:coverage": "node tools/coverage.mjs",
     "lint": "eslint . --max-warnings 0",
-    "serve": "node tests/serve.mjs"
+    "serve": "node tests/serve.mjs",
+    "demo:build": "node tools/build-demo.mjs",
+    "demo": "node tools/build-demo.mjs && node tools/serve-demo.mjs",
+    "test:demo": "playwright test -c playwright.demo.config.mjs",
+    "site:screenshots": "node tools/site-screenshots.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

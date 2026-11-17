@@ -16,7 +16,7 @@ const rules = {
 };
 
 export default [
-  { ignores: ['node_modules/', 'test-results/', 'playwright-report/', '.qa/', '.coverage/'] },
+  { ignores: ['node_modules/', 'test-results/', 'playwright-report/', '.qa/', '.coverage/', 'dist/'] },
   js.configs.recommended,
   {
     files: ['site/**/*.js'],
@@ -26,6 +26,12 @@ export default [
       // merkle.js and demo-core.js also export through `module` for the Node tests.
       globals: { ...globals.browser, module: 'readonly' },
     },
+    rules,
+  },
+  {
+    // The concept demo (demo/) is a set of browser ES modules; it reads the Merkle core from globalThis.
+    files: ['demo/**/*.js'],
+    languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals: globals.browser },
     rules,
   },
   {
@@ -39,7 +45,7 @@ export default [
   },
   {
     // End-to-end tests pass callbacks to page.evaluate(), which run in the browser.
-    files: ['tests/e2e/**/*.mjs'],
+    files: ['tests/e2e/**/*.mjs', 'tests/demo/**/*.mjs'],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
 ];
